@@ -3356,3 +3356,565 @@ footer span {
     font-size: 24px;
   }
 }
+
+/* =========================
+   MOBILE FRONT PAGE FIX
+========================= */
+
+@media (max-width: 768px) {
+
+  /* ---------- NAVBAR ---------- */
+
+  .navbar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 18px 18px;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .nav-logo img {
+    width: 52px;
+    height: 52px;
+    object-fit: contain;
+  }
+
+  /* Hide desktop navigation on phone */
+  .nav-links {
+    display: none !important;
+  }
+
+  .visit-button {
+    display: none !important;
+  }
+
+  /* Show hamburger */
+  .mobile-menu-button {
+    display: flex !important;
+    width: 44px;
+    height: 44px;
+    margin-left: auto;
+  }
+
+
+  /* ---------- HERO ---------- */
+
+  .hero {
+    min-height: 100svh;
+    height: auto;
+    padding: 0;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 5;
+
+    width: 100%;
+    max-width: 100%;
+
+    padding: 0 28px;
+
+    transform: translateY(-55px) !important;
+  }
+
+  .hero-label {
+    margin-bottom: 18px;
+    font-size: 9px;
+    letter-spacing: 0.22em;
+  }
+
+  .hero-content h1 {
+    margin: 0;
+    font-size: clamp(46px, 13vw, 68px) !important;
+    line-height: 0.94 !important;
+    letter-spacing: -0.045em;
+  }
+
+  .hero-content p {
+    max-width: 430px;
+    margin-top: 24px;
+    font-size: 14px;
+    line-height: 1.65;
+  }
+
+  .hero-actions {
+    margin-top: 25px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .hero-primary,
+  .hero-secondary {
+    min-height: 48px;
+    padding: 0 20px;
+    font-size: 10px;
+  }
+
+  /* Hide side vertical text on phone */
+  .hero-side-text {
+    display: none !important;
+  }
+
+  /* Bottom stats */
+  .hero-bottom {
+    padding: 0 28px 28px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+    align-items: end;
+  }
+
+  .hero-scroll {
+    grid-column: 1 / -1;
+    justify-self: center;
+    margin-top: 6px;
+  }
+
+
+  /* ---------- ABOUT ---------- */
+
+  .about-section {
+    padding: 90px 28px;
+  }
+
+  .about-section .section-tag {
+    font-size: 9px;
+    letter-spacing: 0.22em;
+    line-height: 1.6;
+    margin-bottom: 32px;
+  }
+
+  .about-section h2 {
+    margin: 0;
+
+    font-size: clamp(44px, 12vw, 68px) !important;
+    line-height: 0.96 !important;
+    letter-spacing: -0.045em;
+  }
+
+  .about-description {
+    max-width: 430px;
+    margin-top: 28px;
+    font-size: 14px;
+    line-height: 1.7;
+  }
+
+}
+
+/* =========================================
+   FINAL MOBILE LAYOUT
+========================================= */
+
+@media (max-width: 768px) {
+
+  /* ---------- GLOBAL ---------- */
+
+  html,
+  body,
+  #root {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  .website {
+    width: 100%;
+    overflow-x: hidden;
+  }
+
+
+  /* ---------- NAVBAR ---------- */
+
+  .navbar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+
+    width: 100%;
+    box-sizing: border-box;
+
+    padding: 18px 18px;
+
+    display: flex !important;
+    align-items: center;
+    justify-content: space-between;
+
+    z-index: 200;
+  }
+
+  .nav-logo {
+    display: flex !important;
+    align-items: center;
+    padding: 0;
+    border: 0;
+    background: transparent;
+  }
+
+  .nav-logo img {
+    width: 54px;
+    height: 54px;
+    object-fit: contain;
+  }
+
+  /* Desktop links completely hidden */
+  body .navbar .nav-links {
+    display: none !important;
+  }
+
+  body .navbar .visit-button {
+    display: none !important;
+  }
+
+  /* Hamburger visible */
+  body .navbar .mobile-menu-button {
+    display: flex !important;
+
+    margin-left: auto;
+
+    width: 44px;
+    height: 44px;
+
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    gap: 5px;
+
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.45);
+
+    background: rgba(0,0,0,0.28);
+
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+
+    cursor: pointer;
+  }
+
+  .mobile-menu-button span {
+    display: block !important;
+
+    width: 16px;
+    height: 1px;
+
+    background: #ffffff;
+  }
+
+
+  /* ---------- HERO ---------- */
+
+  .hero {
+    position: relative;
+
+    width: 100%;
+    min-height: 100svh;
+    height: 100svh;
+
+    overflow: hidden;
+
+    display: flex;
+    flex-direction: column;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 10;
+
+    width: 100%;
+    box-sizing: border-box;
+
+    padding: 145px 28px 120px;
+
+    margin: 0;
+
+    transform: none !important;
+  }
+
+  .hero-label {
+    margin-bottom: 18px;
+
+    font-size: 9px !important;
+    letter-spacing: 0.22em;
+
+    line-height: 1.4;
+  }
+
+  .hero-content h1 {
+    margin: 0;
+
+    font-size: 52px !important;
+    line-height: 0.93 !important;
+
+    letter-spacing: -0.045em;
+  }
+
+  .hero-content p {
+    max-width: 340px;
+
+    margin-top: 24px;
+
+    font-size: 13px !important;
+    line-height: 1.7;
+  }
+
+
+  /* ---------- BUTTONS ---------- */
+
+  .hero-actions {
+    display: flex !important;
+
+    width: 100%;
+
+    margin-top: 25px;
+
+    gap: 10px;
+
+    align-items: center;
+    flex-wrap: nowrap;
+  }
+
+  .hero-primary,
+  .hero-secondary {
+    width: auto !important;
+
+    min-width: 0;
+
+    min-height: 48px;
+
+    padding: 0 17px !important;
+
+    font-size: 9px !important;
+
+    white-space: nowrap;
+  }
+
+  .hero-primary {
+    flex: 1.25;
+  }
+
+  .hero-secondary {
+    flex: 1;
+  }
+
+
+  /* ---------- HERO SIDE TEXT ---------- */
+
+  .hero-side-text {
+    display: none !important;
+  }
+
+
+  /* ---------- HERO BOTTOM ---------- */
+
+  .hero-bottom {
+    position: absolute;
+
+    left: 0;
+    right: 0;
+    bottom: 22px;
+
+    width: 100%;
+    box-sizing: border-box;
+
+    padding: 0 28px;
+
+    display: grid !important;
+    grid-template-columns: 1fr 1fr;
+
+    gap: 10px;
+
+    z-index: 12;
+  }
+
+  .hero-stat {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .hero-stat strong {
+    font-size: 21px;
+  }
+
+  .hero-stat span {
+    font-size: 8px;
+    letter-spacing: 0.16em;
+  }
+
+  .hero-scroll {
+    display: none !important;
+  }
+
+
+  /* ---------- ABOUT ---------- */
+
+  .about-section {
+    padding: 95px 28px !important;
+  }
+
+  .about-section .section-tag {
+    margin-bottom: 28px;
+
+    font-size: 9px;
+
+    line-height: 1.5;
+    letter-spacing: 0.2em;
+  }
+
+  .about-section h2 {
+    margin: 0;
+
+    font-size: 48px !important;
+    line-height: 0.96 !important;
+
+    letter-spacing: -0.045em;
+  }
+
+  .about-description {
+    margin-top: 28px;
+
+    font-size: 13px;
+    line-height: 1.75;
+  }
+
+
+  /* ---------- MOBILE MENU ---------- */
+
+  .mobile-menu {
+    position: fixed;
+
+    inset: 0;
+
+    width: 100%;
+    height: 100svh;
+
+    padding: 25px 24px;
+
+    box-sizing: border-box;
+
+    background: rgba(8,13,11,0.98);
+
+    z-index: 9999;
+
+    display: flex;
+    flex-direction: column;
+  }
+
+  .mobile-menu-top {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 60px;
+  }
+
+  .mobile-menu-links {
+    display: flex !important;
+
+    flex-direction: column;
+
+    gap: 4px;
+  }
+
+  .mobile-menu-links button {
+    display: flex !important;
+
+    width: 100%;
+
+    padding: 12px 0;
+
+    align-items: center;
+
+    border: 0;
+    background: transparent;
+
+    color: #ffffff;
+
+    font-size: 27px;
+
+    text-align: left;
+  }
+
+  .mobile-menu-links button span {
+    margin-right: 15px;
+
+    color: #c9a86a;
+
+    font-size: 9px;
+  }
+
+  .mobile-menu-find {
+    margin-top: auto;
+  }
+
+
+  /* ---------- FACILITIES ---------- */
+
+  .facilities-section {
+    padding: 90px 24px !important;
+  }
+
+  .facilities-section h2 {
+    font-size: 48px !important;
+    line-height: 0.96 !important;
+
+    margin-bottom: 45px;
+  }
+
+  .facilities-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+
+  /* ---------- GALLERY ---------- */
+
+  .gallery-section {
+    width: 100%;
+    padding: 70px 18px;
+    box-sizing: border-box;
+  }
+
+  .gallery-grid {
+    width: 100%;
+    grid-template-columns: 1fr !important;
+  }
+
+  .gallery-large {
+    grid-row: auto !important;
+  }
+
+
+  /* ---------- INAUGURATION ---------- */
+
+  .inauguration-section {
+    padding: 90px 24px !important;
+  }
+
+  .inauguration-content {
+    grid-template-columns: 1fr !important;
+    gap: 45px !important;
+  }
+
+  .inauguration-text h2 {
+    font-size: 48px !important;
+    line-height: 0.96 !important;
+  }
+
+  .inauguration-image img {
+    height: 360px !important;
+  }
+
+
+  /* ---------- LOCATION ---------- */
+
+  .location-section {
+    padding: 90px 24px !important;
+  }
+
+}
