@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://new-repository-ivory-seven.vercel.app/sitemap.xml
