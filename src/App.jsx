@@ -5,6 +5,7 @@ import gallery1 from "./assets/gallery-1.png";
 import gallery2 from "./assets/gallery-2.png";
 import gallery3 from "./assets/gallery-3.png";
 import yarriEvent from "./assets/yarri-bagh-event.jpeg";
+import instagramQR from "./assets/instagram-qr.jpeg";
 function App() {
   const [progress, setProgress] = useState(0);
   const [loaded, setLoaded] = useState(false);
@@ -14,6 +15,24 @@ function App() {
   const [rulesLoading, setRulesLoading] = useState(false);
   const [rulesOpen, setRulesOpen] = useState(false);
   const [rulesProgress, setRulesProgress] = useState(0);
+  const [formOpen, setFormOpen] = useState(false);
+const [formSubmitted, setFormSubmitted] = useState(false);
+const [applicationNumber, setApplicationNumber] = useState("");
+const [qrZoom, setQrZoom] = useState(false);
+const [applications, setApplications] = useState([]);
+const [selectedApplication, setSelectedApplication] = useState(null);
+const [adminOpen, setAdminOpen] = useState(false);
+const [adminLoggedIn, setAdminLoggedIn] = useState(false);
+const [adminStatus, setAdminStatus] = useState("login");
+const [formData, setFormData] = useState({
+  fullName: "",
+  mobile: "",
+  email: "",
+  age: "",
+  address: "",
+  timeSlot: "",
+  emergencyContact: "",
+});
   // =========================
   // CINEMATIC NAVIGATION
   // =========================
@@ -75,10 +94,343 @@ const openRules = () => {
 
     return () => clearInterval(timer);
   }, []);
+  useEffect(() => {
+  const handleAdminShortcut = (e) => {
+    if (e.ctrlKey && e.key.toLowerCase() === "x") {
+      e.preventDefault();
+      setAdminOpen(true);
+    }
+  };
+
+  window.addEventListener("keydown", handleAdminShortcut);
+
+  return () => {
+    window.removeEventListener("keydown", handleAdminShortcut);
+  };
+}, []);
 
   return (
     <main className="website">
+      {adminOpen && (
+  <div className="admin-overlay">
+    <div className="admin-login">
+      {!adminLoggedIn ? (
+        <>
+          <button
+            className="admin-close"
+            onClick={() => setAdminOpen(false)}
+          >
+            ×
+          </button>
 
+          <div className="admin-kicker">YAARI BAGH · ADMIN</div>
+
+          <h2>Admin<br /><i>Login.</i></h2>
+
+          <input
+            type="text"
+            placeholder="Username"
+            id="adminUsername"
+          />
+
+          <input
+            type="password"
+            placeholder="Password"
+            id="adminPassword"
+          />
+
+          <button
+            className="admin-login-btn"
+            onClick={() => {
+              const username =
+                document.getElementById("adminUsername").value;
+
+              const password =
+                document.getElementById("adminPassword").value;
+
+              if (
+  username === "yarribagh@123" &&
+  password === "Ssuraj@123okie"
+) {
+  setAdminStatus("granted");
+
+  setTimeout(() => {
+    setAdminLoggedIn(true);
+    setAdminStatus("dashboard");
+  }, 1800);
+
+} else {
+  setAdminStatus("failed");
+
+  setTimeout(() => {
+    setAdminStatus("login");
+  }, 1800);
+}
+            }}
+          >
+            LOGIN →
+          </button>
+        </>
+      ) : adminStatus === "granted" ? (
+
+  <div className="admin-status-screen">
+
+    <div className="status-icon success">✓</div>
+
+    <div className="status-kicker">
+      SECURITY VERIFICATION
+    </div>
+
+    <h1>
+      Access<br />
+      <i>Granted.</i>
+    </h1>
+
+    <p>
+      Authentication successful.<br />
+      Preparing management dashboard...
+    </p>
+
+    <div className="status-progress"></div>
+
+  </div>
+
+) : adminStatus === "failed" ? (
+
+  <div className="admin-status-screen">
+
+    <div className="status-icon failed">×</div>
+
+    <div className="status-kicker">
+      SECURITY VERIFICATION
+    </div>
+
+    <h1>
+      Access<br />
+      <i>Failed.</i>
+    </h1>
+
+    <p>
+      Invalid username or password.<br />
+      Returning to secure login...
+    </p>
+
+    <div className="status-progress failed-progress"></div>
+
+  </div>
+
+) : (
+        
+       <div className="admin-dashboard">
+
+  <div className="dashboard-header">
+    <div>
+      <div className="admin-kicker">YAARI BAGH · MANAGEMENT</div>
+      <h1>Applications.</h1>
+      <p>Badminton registration management dashboard</p>
+    </div>
+
+    <button
+      className="dashboard-logout"
+      onClick={() => {
+        setAdminLoggedIn(false);
+        setAdminOpen(false);
+      }}
+    >
+      LOGOUT ↗
+    </button>
+    
+  </div>
+
+  <div className="dashboard-stats">
+
+    <div className="dashboard-stat">
+      <span>TOTAL APPLICATIONS</span>
+      <strong>{applications.length}</strong>
+    </div>
+
+    <div className="dashboard-stat">
+      <span>SPORT</span>
+      <strong>BADMINTON</strong>
+    </div>
+
+    <div className="dashboard-stat">
+      <span>STATUS</span>
+      <strong>ACTIVE</strong>
+    </div>
+
+  </div>
+
+  <div className="dashboard-table-section">
+
+    <div className="dashboard-table-header">
+      <h2>Registration List</h2>
+      <span>{applications.length} APPLICATIONS</span>
+    </div>
+
+    {applications.length === 0 ? (
+      <div className="dashboard-empty">
+        <div>NO APPLICATIONS YET</div>
+        <p>
+          Submitted badminton registrations will appear here.
+        </p>
+      </div>
+    ) : (
+      <div className="dashboard-table-wrap">
+        <table className="dashboard-table">
+          <thead>
+            <tr>
+              <th>APPLICATION NO.</th>
+              <th>NAME</th>
+              <th>MOBILE</th>
+              <th>AGE</th>
+              <th>TIME SLOT</th>
+              <th>SUBMITTED</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            {applications.map((app, index) => (
+              <tr
+  key={index}
+  onClick={() => setSelectedApplication(app)}
+  className="application-row"
+>
+                <td>{app.applicationNumber}</td>
+                <td>{app.fullName}</td>
+                <td>{app.mobile}</td>
+                <td>{app.age}</td>
+                <td>{app.timeSlot}</td>
+                <td>{app.submittedAt}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    )}
+
+  </div>
+
+</div>
+      )}
+    </div>
+    {selectedApplication && (
+  <div
+    className="applicant-detail-overlay"
+    onClick={() => setSelectedApplication(null)}
+  >
+    <div
+      className="applicant-detail-card"
+      onClick={(e) => e.stopPropagation()}
+    >
+
+      <button
+        className="applicant-detail-close"
+        onClick={() => setSelectedApplication(null)}
+      >
+        ×
+      </button>
+
+      <div className="admin-kicker">
+        YAARI BAGH · APPLICANT PROFILE
+      </div>
+
+      <h2>
+        Applicant<br />
+        <i>Details.</i>
+      </h2>
+
+      <div className="applicant-number">
+        <span>APPLICATION NUMBER</span>
+        <strong>{selectedApplication.applicationNumber}</strong>
+      </div>
+
+      <div className="applicant-details-grid">
+
+        <div>
+          <span>FULL NAME</span>
+          <strong>{selectedApplication.fullName}</strong>
+        </div>
+
+        <div>
+          <span>MOBILE NUMBER</span>
+          <strong>{selectedApplication.mobile}</strong>
+        </div>
+
+        <div>
+          <span>EMAIL ADDRESS</span>
+          <strong>{selectedApplication.email}</strong>
+        </div>
+
+        <div>
+          <span>AGE</span>
+          <strong>{selectedApplication.age}</strong>
+        </div>
+
+        <div className="detail-wide">
+          <span>ADDRESS</span>
+          <strong>{selectedApplication.address}</strong>
+        </div>
+
+        <div>
+          <span>PREFERRED TIME SLOT</span>
+          <strong>{selectedApplication.timeSlot}</strong>
+        </div>
+
+        <div>
+          <span>EMERGENCY CONTACT</span>
+          <strong>{selectedApplication.emergencyContact}</strong>
+        </div>
+
+        <div>
+          <span>SPORT</span>
+          <strong>BADMINTON</strong>
+        </div>
+
+        <div>
+          <span>SUBMITTED ON</span>
+          <strong>{selectedApplication.submittedAt}</strong>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+)}
+  </div>
+)}
+     {qrZoom && (
+  <div
+    className="qr-zoom-overlay"
+    onClick={() => setQrZoom(false)}
+  >
+    <button
+      className="qr-zoom-close"
+      onClick={() => setQrZoom(false)}
+    >
+      ×
+    </button>
+
+    <div
+      className="qr-zoom-card"
+      onClick={(e) => e.stopPropagation()}
+    >
+      <div className="qr-zoom-label">
+        SCAN TO JOIN
+      </div>
+
+      <img
+        src={instagramQR}
+        alt="Yaari Bagh Instagram QR Code"
+      />
+
+      <p>
+        Scan this QR code to join the
+        Yaari Bagh Instagram channel.
+      </p>
+    </div>
+  </div>
+)}
       {/* =========================
           LOADER
       ========================= */}
@@ -391,7 +743,270 @@ const openRules = () => {
 )}
       {loaded && (
         <>
+          {formOpen && (
+  <div className="application-overlay">
+    <div className="application-modal">
 
+      {!formSubmitted ? (
+        <>
+          <button
+            className="application-close"
+            onClick={() => setFormOpen(false)}
+          >
+            ×
+          </button>
+
+          <div className="application-kicker">
+            YAARI BAGH · BADMINTON
+          </div>
+
+          <h2>
+            Registration
+            <br />
+            <i>Application.</i>
+          </h2>
+
+          <p className="application-intro">
+            Fill in your details to apply for badminton access at Yaari Bagh.
+          </p>
+
+          <form
+            onSubmit={(e) => {
+  e.preventDefault();
+
+  const number = `YB-${new Date().getFullYear()}-${String(
+    Date.now()
+  ).slice(-6)}`;
+
+  setApplicationNumber(number);
+
+setApplications((prev) => [
+  ...prev,
+  {
+    ...formData,
+    applicationNumber: number,
+    sport: "Badminton",
+    submittedAt: new Date().toLocaleString(),
+  },
+]);
+
+setFormSubmitted(true);
+}}
+          >
+
+            <div className="application-grid">
+
+              <div className="application-field">
+                <label>FULL NAME</label>
+                <input
+                  type="text"
+                  required
+                  value={formData.fullName}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      fullName: e.target.value,
+                    })
+                  }
+                  placeholder="Enter your full name"
+                />
+              </div>
+
+              <div className="application-field">
+                <label>MOBILE NUMBER</label>
+                <input
+                  type="tel"
+                  required
+                  value={formData.mobile}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      mobile: e.target.value,
+                    })
+                  }
+                  placeholder="Enter mobile number"
+                />
+              </div>
+
+              <div className="application-field">
+                <label>EMAIL ADDRESS</label>
+                <input
+                  type="email"
+                  required
+                  value={formData.email}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      email: e.target.value,
+                    })
+                  }
+                  placeholder="Enter email address"
+                />
+              </div>
+
+              <div className="application-field">
+                <label>AGE</label>
+                <input
+                  type="number"
+                  required
+                  value={formData.age}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      age: e.target.value,
+                    })
+                  }
+                  placeholder="Age"
+                />
+              </div>
+
+              <div className="application-field application-full">
+                <label>ADDRESS</label>
+                <textarea
+                  required
+                  value={formData.address}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      address: e.target.value,
+                    })
+                  }
+                  placeholder="Enter your address"
+                />
+              </div>
+
+              <div className="application-field">
+                <label>PREFERRED TIME SLOT</label>
+                <input
+                  type="text"
+                  required
+                  value={formData.timeSlot}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      timeSlot: e.target.value,
+                    })
+                  }
+                  placeholder="e.g. 6 PM – 7 PM"
+                />
+              </div>
+
+              <div className="application-field">
+                <label>EMERGENCY CONTACT</label>
+                <input
+                  type="tel"
+                  required
+                  value={formData.emergencyContact}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      emergencyContact: e.target.value,
+                    })
+                  }
+                  placeholder="Emergency contact number"
+                />
+              </div>
+
+            </div>
+
+            <div className="application-sport">
+              <span>SPORT</span>
+              <strong>🏸 BADMINTON</strong>
+            </div>
+
+            <button
+              type="submit"
+              className="application-submit"
+            >
+              SUBMIT APPLICATION
+              <span>↗</span>
+            </button>
+
+          </form>
+        </>
+      ) : (
+        <div className="application-success">
+
+          <div className="success-icon">✓</div>
+
+          <div className="application-kicker">
+            APPLICATION RECEIVED
+          </div>
+
+          <h2>
+            Thank You.
+            <br />
+            <i>You're In.</i>
+          </h2>
+
+          <p>
+            Your badminton registration application has been
+            successfully submitted.
+          </p>
+
+          <div className="contact-box">
+            <span>CONTACT PERSON</span>
+            <strong>AYUSH SHARMA</strong>
+          </div>
+
+          <div className="application-number-box">
+  <span>APPLICATION NUMBER</span>
+  <strong>{applicationNumber}</strong>
+</div>
+
+          <div className="qr-box">
+            <img
+             src={instagramQR}
+            alt="Yaari Bagh Instagram QR Code"
+            className="instagram-qr"
+            onClick={() => setQrZoom(true)}
+            />
+
+            <div>
+              <strong>Further Queries & Registration</strong>
+              <p>
+                Scan the QR code and join our Instagram channel
+                for further information and registration-related queries.
+              </p>
+            </div>
+          </div>
+
+          <div className="receipt-note">
+            <strong>IMPORTANT</strong>
+            <p>
+              Please save the receipt generated after registration.
+              Take a screenshot or print the receipt and share it
+              after joining the Instagram channel for further assistance.
+            </p>
+          </div>
+
+          <div className="receipt-actions">
+
+  <button
+    className="receipt-print"
+    onClick={() => window.print()}
+  >
+    PRINT / SAVE PDF
+  </button>
+
+  <button
+    className="application-done"
+    onClick={() => {
+      setFormOpen(false);
+      setFormSubmitted(false);
+    }}
+  >
+    CLOSE
+  </button>
+
+</div>
+
+        </div>
+      )}
+
+    </div>
+  </div>
+)}
           {/* =========================
               HERO
           ========================= */}
@@ -573,7 +1188,6 @@ const openRules = () => {
 
             </div>
 
-
             {/* SIDE INFO */}
 
             <div className="hero-side-text">
@@ -632,8 +1246,7 @@ const openRules = () => {
             </div>
 
           </section>
-
-
+            
           {/* =========================
               ABOUT
           ========================= */}
@@ -895,6 +1508,65 @@ const openRules = () => {
     </div>
 
   </div>
+</section>
+
+{/* =========================
+    BADMINTON REGISTRATION
+========================= */}
+
+<section className="registration-section" id="registration">
+
+  <div className="registration-inner">
+
+    <div className="registration-number">
+      07
+    </div>
+
+    <div className="registration-content">
+
+      <div className="section-tag">
+        YAARI BAGH · BADMINTON
+      </div>
+
+      <h2>
+        Ready to
+        <br />
+        <i>Play?</i>
+      </h2>
+
+      <p>
+        Join the Yaari Bagh badminton community.
+        Register your details and get started with
+        your preferred playing time.
+      </p>
+
+      <button
+        className="registration-button"
+        onClick={() => {
+          setFormOpen(true);
+          setFormSubmitted(false);
+        }}
+      >
+        <span>APPLY FOR BADMINTON</span>
+        <strong>↗</strong>
+      </button>
+
+    </div>
+
+    <div className="registration-side">
+
+      <div className="registration-line"></div>
+
+      <span>
+        BADMINTON
+        <br />
+        REGISTRATION
+      </span>
+
+    </div>
+
+  </div>
+
 </section>
 
           {/* =========================
