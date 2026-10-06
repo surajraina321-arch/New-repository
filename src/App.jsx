@@ -11,6 +11,9 @@ function App() {
   const [transitioning, setTransitioning] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
+  const [rulesLoading, setRulesLoading] = useState(false);
+  const [rulesOpen, setRulesOpen] = useState(false);
+  const [rulesProgress, setRulesProgress] = useState(0);
   // =========================
   // CINEMATIC NAVIGATION
   // =========================
@@ -28,7 +31,28 @@ function App() {
     }, 700);
   }, 600);
 };
+const openRules = () => {
+  setMenuOpen(false);
+  setRulesProgress(0);
+  setRulesLoading(true);
 
+  let current = 0;
+
+  const timer = setInterval(() => {
+    current += 2;
+
+    setRulesProgress(current);
+
+    if (current >= 100) {
+      clearInterval(timer);
+
+      setTimeout(() => {
+        setRulesLoading(false);
+        setRulesOpen(true);
+      }, 500);
+    }
+  }, 35);
+};
   // =========================
   // LOADER
   // =========================
@@ -142,7 +166,229 @@ function App() {
       {/* =========================
           MAIN WEBSITE
       ========================= */}
+       {/* =========================
+    PARK RULES LOADING
+========================= */}
 
+{rulesLoading && (
+  <div className="rules-loader">
+
+    <div className="rules-loader-content">
+
+      <div className="rules-loader-logo">
+        <img src={logo} alt="Yaari Bagh" />
+      </div>
+
+      <div className="rules-loader-kicker">
+        YAARI BAGH PARK
+      </div>
+
+      <div className="rules-loader-title">
+        PARK RULES
+      </div>
+
+      <div className="rules-loader-status">
+        Preparing park guidelines
+      </div>
+
+      <div className="rules-loader-bar">
+        <div
+          className="rules-loader-progress"
+          style={{ width: `${rulesProgress}%` }}
+        ></div>
+      </div>
+
+      <div className="rules-loader-percent">
+        <span>PLEASE WAIT</span>
+
+        <strong>
+          {String(rulesProgress).padStart(3, "0")}%
+        </strong>
+      </div>
+
+    </div>
+
+  </div>
+)}
+
+
+{/* =========================
+    PARK RULES PAGE
+========================= */}
+
+{rulesOpen && (
+  <div className="rules-page">
+
+    <div className="rules-page-inner">
+
+      <div className="rules-top">
+
+        <div>
+          <div className="rules-kicker">
+            YAARI BAGH PARK · COMMUNITY GUIDELINES
+          </div>
+
+          <h1 className="rules-title">
+            Park
+            <br />
+            <i>Rules.</i>
+          </h1>
+        </div>
+
+        <button
+          className="rules-close"
+          onClick={() => setRulesOpen(false)}
+          aria-label="Close rules"
+        >
+          ×
+        </button>
+
+      </div>
+
+
+      <div className="rules-grid">
+
+        <div className="rule-card">
+          <div className="rule-number">01</div>
+
+          <div className="rule-icon">🗑️</div>
+
+          <h3>Keep It Clean</h3>
+
+          <p>
+            Please do not throw garbage in the park.
+            Always use the dustbins provided.
+          </p>
+        </div>
+
+
+        <div className="rule-card">
+          <div className="rule-number">02</div>
+
+          <div className="rule-icon">🗣️</div>
+
+          <h3>No Abusive Language</h3>
+
+          <p>
+            Please maintain a respectful environment.
+            Abusive or bad language is not allowed.
+          </p>
+        </div>
+
+
+        <div className="rule-card">
+          <div className="rule-number">03</div>
+
+          <div className="rule-icon">⏰</div>
+
+          <h3>Respect Your Time Slot</h3>
+
+          <p>
+            Everyone must play according to their
+            assigned badminton court time slot.
+          </p>
+        </div>
+
+
+        <div className="rule-card">
+          <div className="rule-number">04</div>
+
+          <div className="rule-icon">🏸</div>
+
+          <h3>Protect The Court</h3>
+
+          <p>
+            Please do not damage the badminton court
+            or any other park property.
+          </p>
+        </div>
+
+
+        <div className="rule-card">
+          <div className="rule-number">05</div>
+
+          <div className="rule-icon">🤝</div>
+
+          <h3>No Fighting</h3>
+
+          <p>
+            Misbehaviour, arguments and fighting with
+            anyone are strictly not acceptable.
+          </p>
+        </div>
+
+
+        <div className="rule-card">
+          <div className="rule-number">06</div>
+
+          <div className="rule-icon">❤️</div>
+
+          <h3>Respect Everyone</h3>
+
+          <p>
+            Treat everyone with respect and maintain
+            a friendly and polite atmosphere.
+          </p>
+        </div>
+
+
+        <div className="rule-card">
+          <div className="rule-number">07</div>
+
+          <div className="rule-icon">👫</div>
+
+          <h3>Play Peacefully</h3>
+
+          <p>
+            Cooperate with other players and enjoy
+            the park together peacefully.
+          </p>
+        </div>
+
+
+        <div className="rule-card">
+          <div className="rule-number">08</div>
+
+          <div className="rule-icon">🌳</div>
+
+          <h3>Keep The Park Safe</h3>
+
+          <p>
+            Help us keep Yaari Bagh clean, safe and
+            welcoming for everyone.
+          </p>
+        </div>
+
+      </div>
+
+
+      <div className="rules-warning">
+
+        <div className="rules-warning-label">
+          IMPORTANT · DISCIPLINE POLICY
+        </div>
+
+        <h3>
+          3-Warning Policy
+        </h3>
+        <p>
+          Anyone who breaks the park rules will receive
+          up to three warnings. After three warnings,
+          the person will no longer be allowed to enter
+          the park.
+        </p>
+
+      </div>
+
+
+      <div className="rules-footer">
+        Follow the rules · Respect the game · Respect the community ❤️🏸
+      </div>
+
+    </div>
+
+  </div>
+)}
       {loaded && (
         <>
 
@@ -315,7 +561,14 @@ function App() {
                 >
                   Get Directions
                 </button>
-
+                <button
+                className="rules-button"
+                onClick={openRules}
+                >
+                <span>🏸</span>
+                 PARK RULES
+                  <span>↗</span>
+                  </button>
               </div>
 
             </div>

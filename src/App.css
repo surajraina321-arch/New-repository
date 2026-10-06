@@ -2218,3 +2218,434 @@ footer span {
     transform: scale(1);
   }
 }
+
+/* =========================================================
+   YAARI BAGH — PARK RULES
+   ========================================================= */
+
+.rules-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+
+  min-height: 50px;
+  padding: 15px 22px;
+
+  border: 1px solid rgba(199, 169, 103, 0.65);
+  border-radius: 50px;
+
+  background: rgba(12, 25, 18, 0.45);
+  color: #ffffff;
+
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+
+  transition: all 0.35s ease;
+}
+
+.rules-button span:first-child {
+  font-size: 15px;
+}
+
+.rules-button span:last-child {
+  color: #d0b77b;
+  font-size: 15px;
+}
+
+.rules-button:hover {
+  transform: translateY(-4px);
+  background: #c7a967;
+  border-color: #c7a967;
+  color: #111713;
+}
+
+
+/* =========================================================
+   RULES LOADING SCREEN
+   ========================================================= */
+
+.rules-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 100000;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background:
+    radial-gradient(
+      circle at center,
+      #243b2f 0%,
+      #14251c 40%,
+      #080d0a 100%
+    );
+
+  color: #ffffff;
+}
+
+.rules-loader-content {
+  width: min(520px, 86%);
+  text-align: center;
+}
+
+.rules-loader-logo {
+  width: 110px;
+  height: 110px;
+  margin: 0 auto 28px;
+
+  overflow: hidden;
+  border-radius: 50%;
+
+  box-shadow:
+    0 0 0 1px rgba(199, 169, 103, 0.4),
+    0 20px 60px rgba(0, 0, 0, 0.5);
+
+  animation: rulesLogoPulse 2s ease-in-out infinite;
+}
+
+.rules-loader-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.rules-loader-kicker {
+  color: #c7a967;
+  font-size: 9px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+}
+
+.rules-loader-title {
+  margin-top: 14px;
+
+  font-family: "Playfair Display", serif;
+  font-size: clamp(40px, 7vw, 70px);
+  font-weight: 500;
+  letter-spacing: -2px;
+}
+
+.rules-loader-status {
+  margin-top: 12px;
+
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 9px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+
+.rules-loader-bar {
+  width: 100%;
+  height: 1px;
+  margin-top: 40px;
+
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.rules-loader-progress {
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    #80663b,
+    #d1b776,
+    #f1dfac
+  );
+
+  transition: width 0.05s linear;
+}
+
+.rules-loader-percent {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-top: 12px;
+
+  color: rgba(255, 255, 255, 0.35);
+  font-size: 8px;
+  letter-spacing: 2px;
+}
+
+.rules-loader-percent strong {
+  color: #d0b77b;
+  font-family: "Playfair Display", serif;
+  font-size: 22px;
+  font-weight: 500;
+}
+
+
+/* =========================================================
+   PARK RULES PAGE
+   ========================================================= */
+
+.rules-page {
+  position: fixed;
+  inset: 0;
+  z-index: 99998;
+
+  overflow-y: auto;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(7, 18, 12, 0.96) 0%,
+      rgba(7, 18, 12, 0.86) 45%,
+      rgba(7, 18, 12, 0.62) 100%
+    ),
+    url("./assets/gallery-1.png");
+
+  background-size: cover;
+  background-position: center;
+
+  color: #ffffff;
+
+  animation: rulesPageIn 0.8s ease forwards;
+}
+
+.rules-page-inner {
+  width: min(1180px, 88%);
+  min-height: 100%;
+  margin: 0 auto;
+
+  padding: 80px 0;
+}
+
+.rules-top {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 30px;
+
+  margin-bottom: 55px;
+}
+
+.rules-kicker {
+  color: #c7a967;
+  font-size: 10px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+}
+
+.rules-title {
+  margin-top: 15px;
+
+  font-size: clamp(50px, 8vw, 100px);
+  font-weight: 500;
+  line-height: 0.88;
+  letter-spacing: -5px;
+}
+
+.rules-title i {
+  color: #d0b77b;
+  font-family: "Playfair Display", serif;
+  font-weight: 400;
+}
+
+.rules-close {
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 50%;
+
+  background: rgba(0, 0, 0, 0.25);
+  color: #ffffff;
+
+  font-size: 25px;
+
+  transition: all 0.3s ease;
+}
+
+.rules-close:hover {
+  transform: rotate(90deg);
+  background: #c7a967;
+  border-color: #c7a967;
+  color: #111713;
+}
+
+.rules-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.rule-card {
+  position: relative;
+
+  min-height: 170px;
+  padding: 28px;
+
+  border: 1px solid rgba(255, 255, 255, 0.14);
+
+  background: rgba(255, 255, 255, 0.055);
+
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+
+  transition:
+    transform 0.35s ease,
+    background 0.35s ease,
+    border-color 0.35s ease;
+}
+
+.rule-card:hover {
+  transform: translateY(-5px);
+  background: rgba(255, 255, 255, 0.09);
+  border-color: rgba(199, 169, 103, 0.55);
+}
+
+.rule-number {
+  color: #c7a967;
+  font-size: 9px;
+  letter-spacing: 3px;
+}
+
+.rule-icon {
+  margin-top: 25px;
+  font-size: 24px;
+}
+
+.rule-card h3 {
+  margin-top: 12px;
+
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.rule-card p {
+  max-width: 430px;
+  margin-top: 8px;
+
+  color: rgba(255, 255, 255, 0.58);
+  font-size: 13px;
+  line-height: 1.65;
+}
+
+
+/* WARNING BOX */
+
+.rules-warning {
+  margin-top: 14px;
+  padding: 30px;
+
+  border: 1px solid rgba(199, 169, 103, 0.5);
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(199, 169, 103, 0.15),
+      rgba(255, 255, 255, 0.035)
+    );
+}
+
+.rules-warning-label {
+  color: #c7a967;
+  font-size: 9px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+
+.rules-warning h3 {
+  margin-top: 12px;
+
+  font-size: 24px;
+  font-weight: 500;
+}
+
+.rules-warning p {
+  max-width: 700px;
+  margin-top: 8px;
+
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.rules-footer {
+  margin-top: 40px;
+
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 9px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+
+/* =========================================================
+   RULES ANIMATIONS
+   ========================================================= */
+
+@keyframes rulesLogoPulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.04);
+  }
+}
+
+@keyframes rulesPageIn {
+  from {
+    opacity: 0;
+    transform: scale(1.025);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+
+/* =========================================================
+   RULES MOBILE
+   ========================================================= */
+
+@media (max-width: 768px) {
+  .rules-page-inner {
+    width: 90%;
+    padding: 35px 0 50px;
+  }
+
+  .rules-top {
+    align-items: flex-start;
+    margin-bottom: 35px;
+  }
+
+  .rules-title {
+    font-size: 52px;
+    letter-spacing: -3px;
+  }
+
+  .rules-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .rule-card {
+    min-height: 150px;
+    padding: 24px;
+  }
+
+  .rules-warning {
+    padding: 24px;
+  }
+
+  .rules-loader-logo {
+    width: 90px;
+    height: 90px;
+  }
+}
